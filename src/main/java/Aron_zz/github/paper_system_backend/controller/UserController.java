@@ -1,11 +1,18 @@
 package Aron_zz.github.paper_system_backend.controller;
 
 import Aron_zz.github.paper_system_backend.entity.User;
+import Aron_zz.github.paper_system_backend.mapper.UserMapper;
 import Aron_zz.github.paper_system_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -14,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
@@ -56,6 +66,17 @@ public class UserController {
         }
     }
 
+    // 忘记密码接口
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
+        try {
+            userService.resetPassword(email, newPassword);
+            return ResponseEntity.ok("密码重置成功");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
     // 查询个人信息接口（修改：改为 @RequestBody）
     @GetMapping("/info")
     public ResponseEntity<?> getUserInfo(@RequestBody Map<String, Long> userRequest) {
@@ -77,5 +98,20 @@ public class UserController {
             return ResponseEntity.badRequest().body("信息提交失败");
         }
     }
+
+    @PostMapping("/upload-avatar")
+    public ResponseEntity<?> uploadAvatar(@RequestParam("file") MultipartFile file,
+                                          @RequestParam("userId") Long userId) {
+        try {
+            String avatarUrl = userService.uploadAvatar(file, userId);
+            return ResponseEntity.ok(avatarUrl);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("上传失败：" + e.getMessage());
+        }
+    }
+
+
 
 }

@@ -6,7 +6,10 @@ import Aron_zz.github.paper_system_backend.mapper.UserMapper;
 import Aron_zz.github.paper_system_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Service
@@ -68,6 +71,54 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.updateById(user) > 0;
     }
+
+    @Override
+    public String uploadAvatar(MultipartFile file, Long userId) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("文件为空");
+        }
+
+        String folderPath = "D:/avatar/";
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        String fileName = userId + ".jpg"; // 可根据需求加时间戳避免覆盖
+        File dest = new File(folderPath + fileName);
+
+        try {
+            file.transferTo(dest);
+        } catch (IOException | IllegalStateException e) {
+            throw new RuntimeException("文件保存失败", e);
+        }
+
+        String avatarUrl = "http://localhost:8080/avatar/" + fileName;
+
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+
+        user.setAvatarUrl(avatarUrl);
+        userMapper.updateById(user);
+
+        return avatarUrl;
+    }
+
+    @Override
+    // 忘记密码逻辑
+    public void resetPassword(String email, String newPassword) {
+        // 1. 查找用户
+        User user = userMapper.selectByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        // 2. 更新密码
+        user.setPassword(newPassword);
+        userMapper.updateById(user);
+    }
+
 
 }
 
