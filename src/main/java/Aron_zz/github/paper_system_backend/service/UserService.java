@@ -15,5 +15,7 @@ public interface UserService {
     String uploadAvatar(MultipartFile file, Long userId);
 
     void resetPassword(String email, String newPassword);
+
+    boolean updateUserInfo(User user);
 }
 

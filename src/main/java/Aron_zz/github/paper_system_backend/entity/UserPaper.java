@@ -25,9 +25,45 @@ public class UserPaper {
     private Integer authorOrder;
     private String contribution;
 
-    // 手动添加 getter（确保方法名严格匹配）
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getPaperId() {
-        return this.paperId;
+        return paperId;
+    }
+
+    public void setPaperId(Long paperId) {
+        this.paperId = paperId;
+    }
+
+    public Integer getAuthorOrder() {
+        return authorOrder;
+    }
+
+    public void setAuthorOrder(Integer authorOrder) {
+        this.authorOrder = authorOrder;
+    }
+
+    public String getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(String contribution) {
+        this.contribution = contribution;
     }
 
 }

@@ -28,6 +28,55 @@ public class Paper {
     @TableField("created_at")
     private LocalDateTime createdAt;
 
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPaperAbstract() {
+        return paperAbstract;
+    }
+
+    public void setPaperAbstract(String paperAbstract) {
+        this.paperAbstract = paperAbstract;
+    }
+
+    public String getDoi() {
+        return doi;
+    }
+
+    public void setDoi(String doi) {
+        this.doi = doi;
+    }
+
+    public LocalDate getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(LocalDate publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }
 
 

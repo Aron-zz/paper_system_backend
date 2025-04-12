@@ -52,6 +52,17 @@ public class UserController {
         }
     }
 
+    // 更新用户信息
+    @PostMapping("/update")
+    public ResponseEntity<String> updateUser(@RequestBody User user) {
+        boolean success = userService.updateUserInfo(user);
+        if (success) {
+            return ResponseEntity.ok("用户更新成功");
+        } else {
+            return ResponseEntity.badRequest().body("用户更新失败");
+        }
+    }
+
     // 修改密码接口（修改：改为 @RequestBody）
     @PutMapping("/update-password")
     public ResponseEntity<String> updatePassword(@RequestBody Map<String, Object> passwordRequest) {
@@ -78,7 +89,7 @@ public class UserController {
     }
 
     // 查询个人信息接口（修改：改为 @RequestBody）
-    @GetMapping("/info")
+    @PostMapping("/info")
     public ResponseEntity<?> getUserInfo(@RequestBody Map<String, Long> userRequest) {
         Long userId = userRequest.get("userId");
         User user = userService.getUserInfo(userId);

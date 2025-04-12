@@ -119,6 +119,7 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 ", contact='" + contact + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", gender='" + gender + '\'' +

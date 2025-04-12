@@ -119,6 +119,12 @@ public class UserServiceImpl implements UserService {
         userMapper.updateById(user);
     }
 
+    @Override
+    public boolean updateUserInfo(User user) {
+        // 要求前端传过来的 user 中必须包含 id，否则无法根据主键更新
+        return userMapper.updateById(user) > 0;
+    }
+
 
 }
 

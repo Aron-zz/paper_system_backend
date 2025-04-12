@@ -11,5 +11,7 @@ public interface UserMapper extends BaseMapper<User> {
     // 根据邮箱查询用户
     @Select("SELECT * FROM user WHERE email = #{email}")
     User selectByEmail(String email);
+
+
 }
 
