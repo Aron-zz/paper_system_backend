@@ -77,6 +77,19 @@ public class Paper {
         this.createdAt = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return "Paper{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", paperAbstract='" + paperAbstract + '\'' +
+                ", doi='" + doi + '\'' +
+                ", publishedAt=" + publishedAt +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
+
 }
 
 
