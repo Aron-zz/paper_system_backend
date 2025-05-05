@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface UserPaperMapper extends BaseMapper<UserPaper> {
     // 可添加用户-论文关联的自定义查询
@@ -22,6 +24,6 @@ public interface UserPaperMapper extends BaseMapper<UserPaper> {
                 LEFT JOIN user_paper up ON u.id = up.user_id
                 GROUP BY u.id
         """)
-    IPage<UserWithPaperCountDTO> selectUsersWithPaperCount(Page<UserWithPaperCountDTO> page);
+    List<UserWithPaperCountDTO> selectUsersWithPaperCount();  // 不分页
 }
 

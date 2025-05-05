@@ -6,6 +6,8 @@ import Aron_zz.github.paper_system_backend.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/contacts")
 public class ContactController {
@@ -15,15 +17,11 @@ public class ContactController {
 
     // 1. 根据 userId 分页查询联系人
     @GetMapping("/by-user/{userId}")
-    public IPage<Contact> getContactsByUserId(
-            @PathVariable Long userId,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        System.out.println("调用 getContactsByUserId, userId = " + userId);
-
-        return contactService.getContactsByUserId(userId, page, size);
+    public List<Contact> getAllContactsByUserId(@PathVariable Long userId) {
+        System.out.println("调用 getAllContactsByUserId, userId = " + userId);
+        return contactService.getAllContactsByUserId(userId);
     }
+
 
     // 2. 模糊搜索联系人姓名（userId + name）
     @GetMapping("/search")

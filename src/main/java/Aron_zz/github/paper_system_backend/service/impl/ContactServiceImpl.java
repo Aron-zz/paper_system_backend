@@ -9,6 +9,8 @@ import Aron_zz.github.paper_system_backend.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
 
@@ -16,17 +18,16 @@ public class ContactServiceImpl implements ContactService {
     private ContactMapper contactMapper;
 
     @Override
-    public IPage<Contact> getContactsByUserId(Long userId, int page, int size) {
-        Page<Contact> contactPage = new Page<>(page, size);
+    public List<Contact> getAllContactsByUserId(Long userId) {
         QueryWrapper<Contact> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId).orderByDesc("updated_at");
-        IPage<Contact> data = contactMapper.selectPage(contactPage, wrapper);
-        for (Contact contact : data.getRecords()) {
+        List<Contact> contacts = contactMapper.selectList(wrapper);
+        for (Contact contact : contacts) {
             System.out.println("联系记录: " + contact);
         }
-
-        return data;
+        return contacts;
     }
+
 
     @Override
     public IPage<Contact> searchContactsByName(Long userId, String nameKeyword, int page, int size) {

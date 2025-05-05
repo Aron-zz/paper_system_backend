@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,16 +18,14 @@ public class UserPaperController {
     private UserPaperService userPaperService;
 
     @GetMapping("/user-count")
-    public Map<String, Object> getUserWithPaperCount(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        IPage<UserWithPaperCountDTO> pageResult = userPaperService.getUsersWithPaperCount(page, size);
+    public Map<String, Object> getUserWithPaperCount() {
+        List<UserWithPaperCountDTO> users = userPaperService.getUsersWithPaperCount();
 
         Map<String, Object> result = new HashMap<>();
-        result.put("records", pageResult.getRecords());  // 当前页的数据
-        result.put("total", pageResult.getTotal());      // 数据总数
+        result.put("records", users);
+        result.put("total", users.size());
 
         return result;
     }
+
 }
